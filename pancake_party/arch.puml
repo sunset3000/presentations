@@ -1,0 +1,83 @@
+@startuml
+!theme plain
+skinparam defaultFontName Arial
+skinparam rectangle {
+    BackgroundColor #F8F9FA
+    BorderColor #333333
+    RoundCorner 10
+}
+skinparam card {
+    BackgroundColor #E8F0FE
+    BorderColor #333333
+    RoundCorner 5
+}
+skinparam package {
+    BackgroundColor transparent
+    BorderColor #333333
+    RoundCorner 5
+}
+
+' Title
+title **Data Architecture Overview**
+
+' Layout Direction
+left to right direction
+
+' --- Data Sources ---
+package "Data Sources" as DS {
+    card "Database" as DB
+    card "Data API" as API
+    card "Game Log" as GameLog
+}
+
+' --- Data Integration ---
+package "Data Integration" as DI {
+    card "LogHub" as LogHub
+
+    rectangle "ETL" as ETL #A2B9E3 {
+        card "Steam ETL\n(Flink)" as StreamETL
+        card "Batch ETL\n(Hive/Spark)" as BatchETL
+        card "ETL Tool\n(Seatunnel)" as ETLTool
+    }
+}
+
+' --- Lakehouse ---
+package "Lakehouse" as LH {
+    rectangle "DORIS" as Doris #FFFFFF {
+        card "ADS" as ADS
+        card "DWS" as DWS
+        card "DWD" as DWD
+    }
+
+    card "ODS" as ODS
+    note bottom of ODS : Data Lake Iceberg/Hive
+}
+
+' --- Data Applications ---
+package "Data Applications" as DA {
+    card "Report Analysis" as Report
+    card "Log Search" as LogSearch
+    card "Ad-hoc Query" as AdHoc
+    card "Metrics\nMonitoring" as Metrics
+    card "User Profiling" as UserProf
+}
+
+' --- Relationships ---
+' Sources to Integration
+DB -right-> DI
+API -right-> DI
+GameLog -right-> DI
+
+' Integration to Lakehouse
+ETL -right-> DWD : Hot-to-Cold\nData Tiering ↓ / Query\nAcceleration ↑
+ETL -right-> ODS
+
+' Lakehouse Internal
+DWD -up-> DWS
+DWS -up-> ADS
+ODS -up-> DWD
+
+' Lakehouse to Applications
+LH -right-> DA
+
+@enduml

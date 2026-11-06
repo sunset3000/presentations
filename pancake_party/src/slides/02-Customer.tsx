@@ -1,12 +1,15 @@
 import {
   Activity,
+  ArrowLeft,
   ArrowRight,
+  ArrowUp,
   BarChart3,
   ChevronRight,
   Database,
   Gamepad2,
   Globe2,
   Rocket,
+  Snowflake,
   TrendingUp,
   Wallet,
   Workflow,
@@ -17,17 +20,17 @@ import { IconBox, Panel, Pill } from '@/src/components/ui'
 import { cn } from '@/src/lib/cn'
 
 const needs = [
-  { icon: Globe2, title: '分析平台全球化', note: '国内体系延伸至海外' },
-  { icon: Rocket, title: '落地速度匹配扩张', note: '业务等不起平台改造' },
-  { icon: Wallet, title: '成本可控', note: '峰值与平稳期都要划算' },
+  { icon: Globe2, title: 'Globalize analytics', note: 'Extend the domestic stack overseas' },
+  { icon: Rocket, title: 'Match expansion speed', note: 'The business cannot wait for a rebuild' },
+  { icon: Wallet, title: 'Controllable cost', note: 'Efficient at peak and steady state' },
 ]
 
 export default function Customer() {
   return (
     <SlideLayout
-      eyebrow="01 · 客户与业务背景"
-      title="快速成长的中国数字原生企业，加速出海"
-      subtitle="不是没有方案，而是现有方案在出海与规模增长下遇到瓶颈"
+      eyebrow="01 · Customer & Business Context"
+      title="A fast-growing Chinese digital-native company goes global"
+      subtitle="There is already a solution — it simply hits its limits under global expansion and scale"
     >
       <div className="grid h-full grid-cols-[0.88fr_1.12fr] gap-6">
         <Panel className="flex flex-col p-8">
@@ -38,12 +41,12 @@ export default function Customer() {
               </div>
               <div className="mt-3 flex items-center gap-3">
                 <h3 className="text-[30px] font-semibold tracking-[-0.02em]">
-                  煎饼派对
+                  Pancake Party
                 </h3>
                 <IconBox icon={Gamepad2} size={38} solid />
               </div>
               <p className="mt-2 text-[14.5px] text-white/50">
-                中国数字原生游戏企业 · 加速拓展海外市场
+                Chinese digital-native game company · going global
               </p>
             </div>
           </div>
@@ -51,7 +54,7 @@ export default function Customer() {
           <div className="relative mt-2 flex flex-1 items-center justify-center">
             <GlobalExpansion />
             <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-2">
-              {['高速成长', '全球化扩张', '数据驱动'].map((tag) => (
+              {['Fast growth', 'Global expansion', 'Data-driven'].map((tag) => (
                 <Pill key={tag}>{tag}</Pill>
               ))}
             </div>
@@ -65,41 +68,41 @@ export default function Customer() {
                 CURRENT STACK
               </div>
               <h3 className="mt-2 text-[19px] font-semibold">
-                当前数据分析平台：自建 Apache Doris
+                Current analytics platform: self-built Apache Doris
               </h3>
             </div>
-            <Pill tone="default">On-Prem · 自运维</Pill>
+            <Pill tone="default">On-Prem · Self-managed</Pill>
           </div>
 
           <div className="mt-4 flex flex-1 flex-col gap-3">
             {/* one integrated stack: ingestion -> Doris -> applications */}
             <div className="flex flex-1 items-stretch gap-3">
               {/* ingestion lanes */}
-              <div className="flex w-[330px] shrink-0 flex-col justify-center gap-4">
+              <div className="flex w-[330px] shrink-0 flex-col justify-center gap-3">
                 <div>
                   <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-white/25">
                     <span className="h-[3px] w-[3px] bg-ch-yellow" />
-                    实时链路 · STREAMING
+                    Real-time pipeline · STREAMING
                   </div>
                   <div className="flex items-center gap-1">
                     <FlowNode
                       icon={Gamepad2}
-                      title="用户终端数据"
-                      sub="客户端 · SDK"
+                      title="Player device data"
+                      sub="Client · SDK"
                       className="flex-1"
                     />
                     <ArrowRight size={12} className="shrink-0 text-white/20" />
                     <FlowNode
                       icon={Workflow}
                       title="Kafka"
-                      sub="消息队列"
+                      sub="Queue"
                       className="w-[78px]"
                     />
                     <ArrowRight size={12} className="shrink-0 text-white/20" />
                     <FlowNode
                       icon={Zap}
                       title="Flink Job"
-                      sub="实时处理"
+                      sub="Streaming"
                       className="w-[90px]"
                     />
                     <ArrowRight
@@ -112,7 +115,7 @@ export default function Customer() {
                 <div>
                   <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-white/25">
                     <span className="h-[3px] w-[3px] bg-ch-yellow" />
-                    批处理链路 · BATCH
+                    Batch pipeline · BATCH
                   </div>
                   <div className="flex items-center gap-1">
                     <FlowNode
@@ -129,23 +132,38 @@ export default function Customer() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-2.5">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/[0.05]">
-                    <Activity size={13} className="text-ch-yellow" />
-                  </span>
-                  <div>
-                    <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/25">
-                      INGEST PROFILE
+                <div>
+                  <div className="mb-1.5 flex items-center justify-center gap-1.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-ch-yellow/50">
+                    <ArrowUp size={10} className="text-ch-yellow/60" />
+                    BATCH ETL SOURCE
+                  </div>
+                  <div className="relative rounded-lg border border-white/12 bg-white/[0.03] px-3.5 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <Snowflake size={12} className="text-ch-yellow/70" />
+                      <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-white/30">
+                        COLD · DATALAKE
+                      </span>
+                      <span className="ml-auto font-mono text-[8px] tracking-[0.08em] text-white/20">
+                        ICEBERG / HIVE
+                      </span>
                     </div>
-                    <div className="mt-1 flex items-baseline gap-3 text-[10.5px] text-white/45">
-                      <span>
-                        <b className="font-semibold text-white/80">50–200</b>{' '}
-                        MB/s
+                    <div className="mt-1.5 flex items-baseline gap-2">
+                      <span className="text-[14.5px] font-semibold leading-none text-white/85">
+                        Iceberg / Hive
                       </span>
-                      <span>
-                        <b className="font-semibold text-white/80">50万</b>{' '}
-                        消息/秒
+                      <span className="text-[10px] text-white/35">
+                        Cold data · Data lake
                       </span>
+                    </div>
+                    <div className="mt-2 flex items-center gap-1.5 border-t border-white/[0.08] pt-1.5">
+                      <span className="h-[3px] w-[3px] shrink-0 bg-ch-yellow/55" />
+                      <span className="text-[9.5px] leading-[1.4] text-white/35">
+                        Doris cold-data archive · Hive / Spark batch read-back
+                      </span>
+                    </div>
+                    <div className="pointer-events-none absolute -right-[20px] top-1/2 z-10 flex -translate-y-1/2 items-center">
+                      <ArrowLeft size={12} className="shrink-0 text-ch-yellow/85" />
+                      <span className="h-px w-[9px] border-t border-dashed border-ch-yellow/45" />
                     </div>
                   </div>
                 </div>
@@ -163,13 +181,13 @@ export default function Customer() {
                   Apache Doris
                 </div>
                 <div className="mt-1 text-[10px] leading-[1.5] text-white/40">
-                  核心 OLAP
+                  Core OLAP
                   <br />
-                  自建 · On-Prem
+                  Self-built · On-Prem
                 </div>
                 <div className="mt-2">
                   <Pill tone="dark" className="px-2 py-1 text-[9.5px]">
-                    自运维
+                    Self-managed
                   </Pill>
                 </div>
               </div>
@@ -184,22 +202,22 @@ export default function Customer() {
                 <div className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-white/30">
                   DATA APPLICATIONS
                 </div>
-                <div className="mt-1 text-[10px] text-white/35">业务全覆盖</div>
+                <div className="mt-1 text-[10px] text-white/35">Full business coverage</div>
                 <div className="mt-2 grid flex-1 grid-rows-3 gap-2">
                   <ScenarioCard
                     icon={Gamepad2}
-                    title="玩家行为分析"
-                    items={['流失节点识别', '留存与召回', '道具定价投放']}
+                    title="Player behavior analysis"
+                    items={['Churn point identification', 'Retention & win-back', 'Item pricing & placement']}
                   />
                   <ScenarioCard
                     icon={Activity}
-                    title="运营指标监控"
-                    items={['DAU / MAU', '付费转化 · ARPU', '延迟与崩溃率']}
+                    title="Operations monitoring"
+                    items={['DAU / MAU', 'Conversion · ARPU', 'Latency & crash rate']}
                   />
                   <ScenarioCard
                     icon={BarChart3}
-                    title="商业智能分析"
-                    items={['地区 / 设备付费力', '营销效果评估', 'LTV 预测']}
+                    title="Business intelligence"
+                    items={['Spend by region / device', 'Marketing effectiveness', 'LTV prediction']}
                   />
                 </div>
               </div>
@@ -207,7 +225,7 @@ export default function Customer() {
 
             <div className="flex items-center gap-2 rounded-md border border-ch-yellow/15 bg-ch-yellow/[0.03] px-3 py-1.5">
               <span className="text-[10px] text-ch-yellow/75">
-                三类核心场景，一套 Doris 统一承载
+                Three core scenarios, one Doris engine
               </span>
               <span className="ml-auto font-mono text-[8px] tracking-[0.12em] text-white/25">
                 ONE ENGINE · FULL COVERAGE
@@ -236,24 +254,28 @@ export default function Customer() {
             <div className="mt-auto flex items-center gap-2.5 border-t border-white/10 pt-2.5">
               <span className="h-[5px] w-[5px] bg-ch-yellow" />
               <span className="text-[11.5px] text-white/40">
-                升级 · 备份 · 扩容 · 故障排查，全部由自己的团队承担
+                Upgrades, backups, scaling, and troubleshooting all sit with the in-house team
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 border-t border-white/10 pt-2.5">
+            <div className="grid grid-cols-4 gap-2 border-t border-white/10 pt-2.5">
               {[
-                { value: '20', unit: 'TB / 天', label: '玩家行为数据' },
-                { value: '亿级', unit: 'EVENTS', label: '日均事件量' },
-                { value: '50万', unit: '消息/秒', label: '峰值写入' },
+                { value: '20', unit: 'TB / day', label: 'Player data' },
+                { value: '100M+', unit: 'EVENTS', label: 'Daily events' },
+                { value: '50–200', unit: 'MB/s', label: 'Steady writes' },
+                { value: '500K', unit: 'msg/s', label: 'Peak writes' },
               ].map((metric) => (
-                <div key={metric.label} className="flex items-baseline gap-1.5">
-                  <span className="text-[19px] font-semibold tracking-[-0.03em] text-white/85">
+                <div
+                  key={metric.label}
+                  className="flex items-baseline gap-1.5 whitespace-nowrap"
+                >
+                  <span className="text-[17px] font-semibold tracking-[-0.03em] text-white/85">
                     {metric.value}
                   </span>
-                  <span className="font-mono text-[9.5px] tracking-[0.08em] text-ch-yellow/60">
+                  <span className="font-mono text-[9px] tracking-[0.08em] text-ch-yellow/60">
                     {metric.unit}
                   </span>
-                  <span className="ml-1 text-[11px] text-white/25">
+                  <span className="ml-1 text-[10px] text-white/25">
                     {metric.label}
                   </span>
                 </div>
@@ -331,17 +353,17 @@ function GlobalExpansion() {
   const routes = [
     {
       d: 'M76 225 C 170 150, 260 90, 360 68',
-      label: '东南亚',
+      label: 'Southeast Asia',
       labelClassName: 'left-[67%] top-[12%]',
     },
     {
       d: 'M76 225 C 200 215, 360 190, 482 170',
-      label: '欧洲',
+      label: 'Europe',
       labelClassName: 'left-[86%] top-[53%] -translate-x-1/2 text-center',
     },
     {
       d: 'M76 225 C 170 270, 260 285, 350 265',
-      label: '北美',
+      label: 'North America',
       labelClassName: 'left-[65%] top-[72%]',
     },
   ]
@@ -353,11 +375,11 @@ function GlobalExpansion() {
           GLOBAL EXPANSION
         </div>
         <div className="mt-2 text-[13px] font-medium text-white/55">
-          分析平台全球化
+          Global analytics platform
         </div>
         <div className="mt-1 flex items-center gap-1.5 text-[11px] text-ch-yellow">
           <TrendingUp size={12} />
-          <span>出海节奏加速</span>
+          <span>Global expansion accelerating</span>
           <span className="flex items-center text-ch-yellow/60">
             <ChevronRight size={10} />
             <ChevronRight size={12} />
@@ -448,7 +470,7 @@ function GlobalExpansion() {
       </div>
       <div className="absolute left-[20px] top-[76%]">
         <div className="text-[13px] font-medium text-white/80">
-          中国 · 分析平台
+          China · Analytics platform
         </div>
         <div className="mt-1 font-mono text-[8.5px] uppercase tracking-[0.14em] text-ch-yellow/55">
           SELF-BUILT OLAP

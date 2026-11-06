@@ -5,7 +5,7 @@ import {
   Clock,
   Server,
   TrendingUp,
-  Workflow,
+  Wrench,
 } from 'lucide-react'
 import { SlideLayout } from '@/src/components/Presentation'
 import { Panel, Pill } from '@/src/components/ui'
@@ -18,6 +18,7 @@ const scores = [
     en: 'Storage Reliability',
     value: '100%',
     width: 100,
+    note: '关键组件（DB、S3）均纳入「服务」保障',
   },
   {
     index: '02',
@@ -25,6 +26,7 @@ const scores = [
     en: 'Operational Reliability',
     value: '100%',
     width: 100,
+    note: '大量复杂运维任务卸载至托管服务',
   },
   {
     index: '03',
@@ -33,6 +35,7 @@ const scores = [
     value: '80–85%',
     width: 83,
     honest: true,
+    note: '显著降低但未完全消除——结合投入看结果良好',
   },
   {
     index: '04',
@@ -40,6 +43,7 @@ const scores = [
     en: 'Flexibility for Growth',
     value: '100%',
     width: 100,
+    note: '无停机、无数据再平衡，仅扩无状态计算节点，数分钟内 2x / 5x / 10x',
   },
   {
     index: '05',
@@ -47,13 +51,13 @@ const scores = [
     en: 'Optimal Cost',
     value: '100%',
     width: 100,
+    note: '降低总 TCO，服务成本可比，且被收益数倍覆盖',
   },
 ]
 
 const simplifications = [
   { from: 'MinIO', to: 'Amazon S3', icon: Server },
-  { from: '3 套 Airflow', to: '1 套统一调度', icon: Workflow },
-  { from: '旧服务器脚本', to: '清理冗余配置', icon: Clock },
+  { from: '旧服务器搭建与维护', to: '清理冗余配置与脚本', icon: Wrench },
 ]
 
 export default function ValueScorecard() {
@@ -61,10 +65,10 @@ export default function ValueScorecard() {
     <SlideLayout
       eyebrow="12 · 方案价值 01"
       title="五项 Objective，逐项达成"
-      subtitle="不是概念映射，而是迁移结束后的验收结果"
+      subtitle="成本可比，收益数倍覆盖——不是概念映射，而是验收结果"
     >
       <div className="flex h-full flex-col gap-4">
-        <div className="grid min-h-0 flex-1 grid-cols-[1.06fr_0.94fr] gap-5">
+        <div className="grid min-h-0 flex-1 grid-cols-[1.04fr_0.96fr] gap-5">
           <Panel className="flex flex-col p-7">
             <div className="flex items-start justify-between">
               <div>
@@ -73,14 +77,14 @@ export default function ValueScorecard() {
                 </div>
                 <h3 className="mt-2 text-[19px] font-semibold">验收记分卡</h3>
               </div>
-              <Pill tone="yellow">4 / 5 × 100%</Pill>
+              <Pill tone="yellow">4 × 100% · 1 × 80–85%</Pill>
             </div>
 
-            <div className="mt-5 flex flex-1 flex-col justify-center">
+            <div className="mt-3.5 flex flex-1 flex-col justify-center">
               {scores.map((score, i) => (
                 <div
                   key={score.index}
-                  className="anim-rise border-t border-white/[0.08] py-3.5 first:border-0 first:pt-0"
+                  className="anim-rise border-t border-white/[0.08] py-2.5 first:border-0 first:pt-0"
                   style={{ '--delay': `${130 + i * 60}ms` } as CSSProperties}
                 >
                   <div className="flex items-baseline gap-3">
@@ -102,8 +106,15 @@ export default function ValueScorecard() {
                       {score.value}
                     </span>
                   </div>
-                  <div className="mt-2.5 flex items-center gap-3">
-                    <div className="h-[5px] flex-1 overflow-hidden rounded-full bg-white/10">
+
+                  <div className="mt-1 flex items-center gap-3 pl-[26px]">
+                    <span className="min-w-0 flex-1 truncate text-[11.5px] text-white/35">
+                      {score.note}
+                    </span>
+                  </div>
+
+                  <div className="mt-1.5 flex items-center pl-[26px]">
+                    <div className="h-[4px] flex-1 overflow-hidden rounded-full bg-white/10">
                       <div
                         className={cn(
                           'anim-grow-x h-full rounded-full',
@@ -117,17 +128,12 @@ export default function ValueScorecard() {
                         }
                       />
                     </div>
-                    {score.honest && (
-                      <span className="w-[148px] text-right text-[11.5px] leading-[1.45] text-white/40">
-                        未完全消除，但显著降低
-                      </span>
-                    )}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-4 flex items-center gap-2 border-t border-white/10 pt-4">
+            <div className="mt-3 flex items-center gap-2 border-t border-white/10 pt-3.5">
               <span className="h-[4px] w-[4px] bg-ch-yellow" />
               <span className="text-[12px] text-white/35">
                 80–85% 的诚实评分，比 100% 的口号更可信。
@@ -187,18 +193,18 @@ export default function ValueScorecard() {
                   COMPLEXITY REDUCTION
                 </div>
                 <span className="font-mono text-[10px] text-white/20">
-                  3 SIMPLIFICATIONS
+                  2 SIMPLIFICATIONS
                 </span>
               </div>
 
-              <div className="mt-3.5 space-y-2.5">
+              <div className="flex flex-1 flex-col justify-center space-y-2.5 py-3">
                 {simplifications.map(({ from, to, icon: Icon }) => (
                   <div
                     key={from}
-                    className="flex items-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.02] px-3.5 py-2.5"
+                    className="flex items-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.02] px-3.5 py-3"
                   >
                     <Icon size={13} className="shrink-0 text-ch-yellow/60" />
-                    <span className="w-[102px] shrink-0 text-[12.5px] text-white/40 line-through decoration-white/15">
+                    <span className="w-[136px] shrink-0 text-[12.5px] text-white/40 line-through decoration-white/15">
                       {from}
                     </span>
                     <ArrowRight size={12} className="shrink-0 text-white/20" />
@@ -207,7 +213,7 @@ export default function ValueScorecard() {
                 ))}
               </div>
 
-              <div className="mt-auto flex items-center gap-2 border-t border-white/10 pt-3">
+              <div className="flex items-center gap-2 border-t border-white/10 pt-3">
                 <span className="h-[4px] w-[4px] bg-ch-yellow" />
                 <span className="text-[11.5px] text-white/30">
                   少一套系统，就少一类故障源。

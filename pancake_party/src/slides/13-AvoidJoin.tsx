@@ -35,7 +35,7 @@ const joinCosts = ['数据 Shuffle', '内存放大', '调度等待']
 export default function AvoidJoin() {
   return (
     <SlideLayout
-      eyebrow="11 · 性能实践"
+      eyebrow="10 · 性能实践"
       title="Non-Join 比 Join 快 10–100 倍"
       subtitle="从 Doris 的 CBO 习惯，切换到 ClickHouse 的建模方式"
     >

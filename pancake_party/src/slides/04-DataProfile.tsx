@@ -4,51 +4,51 @@ import { SlideLayout } from '@/src/components/Presentation'
 import { Panel, Pill, Stat } from '@/src/components/ui'
 
 const events = [
-  { label: '移动轨迹', side: 'up' },
-  { label: '技能释放', side: 'down' },
-  { label: '伤害统计', side: 'up' },
-  { label: '掉落拾取', side: 'down' },
-  { label: '状态变化', side: 'up' },
-  { label: '社交互动', side: 'down' },
+  { label: 'Movement', side: 'up' },
+  { label: 'Skill casts', side: 'down' },
+  { label: 'Damage', side: 'up' },
+  { label: 'Loot pickup', side: 'down' },
+  { label: 'Status changes', side: 'up' },
+  { label: 'Social actions', side: 'down' },
 ]
 
 export default function DataProfile() {
   return (
     <SlideLayout
-      eyebrow="02 · 数据画像"
-      title="20TB/天、亿级事件、200+ 维度、高基数"
-      subtitle="这不是普通报表负载——它直接定义架构选型"
+      eyebrow="02 · Data Profile"
+      title="20 TB/day, 100M+ events, 200+ dimensions, high cardinality"
+      subtitle="This is not a typical reporting workload — it directly defines the architecture"
     >
       <div className="flex h-full flex-col">
         <div className="grid grid-cols-4">
           <Stat
             value="20"
-            unit="TB / 天"
-            label="每日玩家行为数据"
-            note="持续写入，不是离线批量"
+            unit="TB / day"
+            label="Daily player events"
+            note="Continuous writes, not offline batches"
             className="border-l-0 border-white/10 pl-0"
             delay={100}
           />
           <Stat
-            value="亿"
-            unit="级 / 天"
-            label="日均事件写入量"
-            note="大促与版本期进一步放大"
+            value="100M+"
+            unit="EVENTS"
+            label="Daily event ingestion"
+            note="Further amplified during launches and campaigns"
             className="border-l border-white/10 pl-8"
             delay={160}
           />
           <Stat
             value="200"
             unit="+"
-            label="分析指标与维度"
-            note="多维度组合、探索式查询"
+            label="Metrics and dimensions"
+            note="Multi-dimensional, exploratory queries"
             className="border-l border-white/10 pl-8"
             delay={220}
           />
           <Stat
-            value="上亿"
-            label="高基数玩家 ID"
-            note="单维度基数即可达到亿级"
+            value="100M+"
+            label="High-cardinality player IDs"
+            note="A single dimension can reach 100M+"
             className="border-l border-white/10 pl-8"
             delay={280}
           />
@@ -62,7 +62,7 @@ export default function DataProfile() {
                   EVENT ANATOMY
                 </div>
                 <h3 className="mt-2 text-[18px] font-semibold">
-                  一次副本战斗，产生 50+ 条事件日志
+                  One dungeon battle generates 50+ event logs
                 </h3>
               </div>
               <Pill tone="yellow">
@@ -112,7 +112,7 @@ export default function DataProfile() {
             <div className="mt-2 flex items-center gap-2.5 border-t border-white/10 pt-4">
               <Zap size={13} className="text-ch-yellow" />
               <span className="text-[12.5px] text-white/40">
-                明细粒度越细，实时分析的查询压力与价值同时上升
+                Finer granularity raises both query pressure and analytical value
               </span>
             </div>
           </Panel>
@@ -121,14 +121,14 @@ export default function DataProfile() {
             <div className="font-mono text-[12px] tracking-[0.24em] text-white/35">
               WRITE PROFILE
             </div>
-            <h3 className="mt-2 text-[18px] font-semibold">写入侧约束</h3>
+            <h3 className="mt-2 text-[18px] font-semibold">Write-side constraints</h3>
 
             <div className="mt-6 grid flex-1 grid-cols-2 gap-3">
               {[
-                { icon: Activity, value: '50–200', unit: 'MB/s', label: '持续写入' },
-                { icon: Gauge, value: '50万', unit: '消息/秒', label: '峰值写入' },
-                { icon: Clock, value: '秒级', unit: 'VISIBLE', label: '实时可见性' },
-                { icon: Zap, value: '10–20×', unit: 'SPIKE', label: '版本期流量放大' },
+                { icon: Activity, value: '50–200', unit: 'MB/s', label: 'Sustained writes' },
+                { icon: Gauge, value: '500K', unit: 'MSG / S', label: 'Peak writes' },
+                { icon: Clock, value: 'Seconds', unit: 'VISIBLE', label: 'Real-time visibility' },
+                { icon: Zap, value: '10–20×', unit: 'SPIKE', label: 'Launch traffic spike' },
               ].map(({ icon: Icon, value, unit, label }, i) => (
                 <div
                   key={label}
@@ -153,10 +153,10 @@ export default function DataProfile() {
 
             <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
               <span className="text-[11.5px] text-white/30">
-                20 TB/天 ≈ 231 MB/s 平均值
+                20 TB/day ≈ 231 MB/s average
               </span>
               <span className="font-mono text-[10px] tracking-[0.12em] text-ch-yellow/45">
-                BURST → 50万 消息/秒
+                BURST → 500K MSG/S
               </span>
             </div>
           </Panel>
@@ -165,7 +165,7 @@ export default function DataProfile() {
         <div className="mt-5 flex items-center gap-3 pl-1">
           <span className="h-[3px] w-[3px] bg-ch-yellow" />
           <p className="text-[13.5px] text-white/40">
-            批处理太慢，预计算不够灵活——需要实时、灵活、可扩展的 OLAP。
+            Batch processing is too slow and pre-computation too rigid — we need real-time, flexible, scalable OLAP.
           </p>
         </div>
       </div>

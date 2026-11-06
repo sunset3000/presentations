@@ -26,10 +26,19 @@ const KEYWORDS = new Set([
   'UNION',
   'ALL',
   'DISTINCT',
+  'CREATE',
+  'TABLE',
+  'ENGINE',
+  'ALTER',
+  'ADD',
+  'INDEX',
+  'TYPE',
+  'GRANULARITY',
 ])
 
 const FUNCTIONS = new Set([
   'countDistinctIf',
+  'countDistinct',
   'dateDiff',
   'min',
   'max',
@@ -38,6 +47,9 @@ const FUNCTIONS = new Set([
   'count',
   'toDate',
   'toDateTime',
+  'toStartOfMinute',
+  'today',
+  'JSONExtractString',
   'JSONExtractUInt',
   'JSONExtractFloat',
   'windowFunnel',
@@ -45,6 +57,8 @@ const FUNCTIONS = new Set([
   'median',
   'now',
   'round',
+  'SummingMergeTree',
+  'bloom_filter',
 ])
 
 function highlightLine(line: string): ReactNode[] {
@@ -101,12 +115,15 @@ export function CodeBlock({
   footer,
   className,
   bodyClassName,
+  compact = false,
 }: {
   code: string
   filename: string
   footer?: ReactNode
   className?: string
   bodyClassName?: string
+  /** Denser header and body for side-by-side SQL snippets. */
+  compact?: boolean
 }) {
   const lines = code.replace(/\n$/, '').split('\n')
   return (
@@ -116,29 +133,69 @@ export function CodeBlock({
         className,
       )}
     >
-      <div className="flex h-[42px] shrink-0 items-center gap-3 border-b border-white/10 px-4">
-        <div className="flex gap-1.5">
-          <span className="h-[7px] w-[7px] rounded-full bg-white/15" />
-          <span className="h-[7px] w-[7px] rounded-full bg-white/15" />
-          <span className="h-[7px] w-[7px] rounded-full bg-white/15" />
+      <div
+        className={cn(
+          'flex shrink-0 items-center gap-3 border-b border-white/10',
+          compact ? 'h-[30px] px-3' : 'h-[42px] px-4',
+        )}
+      >
+        <div className={compact ? 'flex gap-1' : 'flex gap-1.5'}>
+          <span
+            className={cn(
+              'rounded-full bg-white/15',
+              compact ? 'h-[5px] w-[5px]' : 'h-[7px] w-[7px]',
+            )}
+          />
+          <span
+            className={cn(
+              'rounded-full bg-white/15',
+              compact ? 'h-[5px] w-[5px]' : 'h-[7px] w-[7px]',
+            )}
+          />
+          <span
+            className={cn(
+              'rounded-full bg-white/15',
+              compact ? 'h-[5px] w-[5px]' : 'h-[7px] w-[7px]',
+            )}
+          />
         </div>
-        <span className="font-mono text-[12px] tracking-[0.04em] text-white/35">
+        <span
+          className={cn(
+            'font-mono tracking-[0.04em] text-white/35',
+            compact ? 'text-[9.5px]' : 'text-[12px]',
+          )}
+        >
           {filename}
         </span>
-        <span className="ml-auto font-mono text-[10.5px] uppercase tracking-[0.18em] text-ch-yellow/60">
+        <span
+          className={cn(
+            'ml-auto font-mono uppercase text-ch-yellow/60',
+            compact
+              ? 'text-[8px] tracking-[0.14em]'
+              : 'text-[10.5px] tracking-[0.18em]',
+          )}
+        >
           ClickHouse SQL
         </span>
       </div>
 
       <div
         className={cn(
-          'flex-1 overflow-hidden px-5 py-4 font-mono text-[12.8px] leading-[1.68] text-[#d4d4d4]',
+          'flex-1 overflow-hidden font-mono text-[#d4d4d4]',
+          compact
+            ? 'px-3 py-2.5 text-[10.5px] leading-[1.55]'
+            : 'px-5 py-4 text-[12.8px] leading-[1.68]',
           bodyClassName,
         )}
       >
         {lines.map((line, lineIndex) => (
           <div key={lineIndex} className="flex">
-            <span className="w-7 shrink-0 select-none pr-3 text-right text-white/20">
+            <span
+              className={cn(
+                'shrink-0 select-none text-right text-white/20',
+                compact ? 'w-5 pr-2 text-[8.5px]' : 'w-7 pr-3',
+              )}
+            >
               {lineIndex + 1}
             </span>
             <pre className="whitespace-pre font-mono">

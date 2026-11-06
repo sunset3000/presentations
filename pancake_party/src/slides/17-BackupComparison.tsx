@@ -1,3 +1,4 @@
+import { Check, X } from 'lucide-react'
 import { SlideLayout } from '@/src/components/Presentation'
 
 interface ComparisonRow {
@@ -37,8 +38,8 @@ const rows: ComparisonRow[] = [
     ],
     enterprise: [
       'Join is 26x faster since 22.4',
+      'multi-stage distributed query',
       'Statistics-based join reordering',
-      'Only supports single-table materialized views',
       'Parallel replicas mitigate high concurrency impact',
     ],
   },
@@ -195,13 +196,21 @@ function Cell({
       <div className="space-y-[3px]">
         {items.map((item) => (
           <div key={item} className="flex items-start gap-1.5">
-            <span
-              className={
-                enterprise
-                  ? 'mt-[6px] h-[3px] w-[3px] shrink-0 bg-ch-yellow'
-                  : 'mt-[6px] h-[3px] w-[3px] shrink-0 bg-white/25'
-              }
-            />
+            {dim ? (
+              <X
+                size={11}
+                strokeWidth={2.4}
+                className="mt-[3px] shrink-0 text-white/30"
+                aria-hidden="true"
+              />
+            ) : (
+              <Check
+                size={11}
+                strokeWidth={2.4}
+                className="mt-[3px] shrink-0 text-emerald-400"
+                aria-hidden="true"
+              />
+            )}
             <span
               className={
                 enterprise

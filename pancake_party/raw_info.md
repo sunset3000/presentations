@@ -319,6 +319,8 @@ For the existing system in China:
 Run two systems in parallel for a period of time, ensuring that the results matched exactly before switching over completely.
 - Kafka events (like CDC events): consumed by both systems
 - Flink Jobs: ingest results to both systems
+- Hive/Spark Jobs: batch ingest results to both systems
+- Existing/historical data: batch imported into ClickHouse via Aliyun DTS
 
 For the new system overseas:
 Setup the new system in Aliyun, all data sources route data to Clickhouse Enterprise.
@@ -338,6 +340,40 @@ the best practice for performance is to avoid unnecessary join or low efficient 
 Two Approaches:
 1. pre-built wide table to avoid join
 2. convert right tables to dictionary or use direct join
+
+## MISC tips
+利用 ALTER TABLE FREEZE 实现赛季数据秒级快照：
+```
+# 赛季结束时执行
+ALTER TABLE season_data FREEZE WITH NAME 'season_2023_final'
+
+# 新赛季创建时恢复
+ALTER TABLE season_data ATTACH PARTITION '202401' FROM 'season_2023_final'
+```
+
+预聚合 ：对固定维度的指标预先计算
+```sql
+CREATE TABLE daily_user_stats (
+    stat_date Date,
+    user_id UInt64,
+    login_count UInt16,
+    play_minutes UInt32,
+    payment_total Decimal(18,2)
+) ENGINE = SummingMergeTree()
+ORDER BY (stat_date, user_id);
+```
+
+跳数索引 ：加速特定条件查询
+
+```
+ALTER TABLE game_events ADD INDEX idx_item(item_id) TYPE bloom_filter GRANULARITY 3;
+```
+
+冷热数据分离 ：将历史数据转移到廉价存储
+```sql
+CREATE TABLE game_events_archive AS game_events 
+ENGINE = Distributed('archive_cluster', currentDatabase(), 'game_events');
+```
 
 # Value Proposition
 
@@ -362,7 +398,14 @@ There are also options to split data into hot and cold storage, potentially halv
 5. By achieving results faster at the exact resource cost, the business naturally benefits.
 
 ## Open to a wide Clickhouse ecosystem
-For trace analysis on opentelemetry: ClickStack, SigNoz
+Ecosystem of each areas:
+
+Observability: ClickStack, SigNoz, PromQL to Prometheus, Grafana
+AI: Agnoo, DSPy, LangChain, LlamIndex, PydanticAI, LibreChat
+Open table Formats & catalogs: Delta Lake, Iceberg, Iceberg REST catalog, Apache Polaris, Unity Catalog
+Cloud Native: clickhouse-operator
+Pipelines: ClickPipe, Apache Airflow, dbt
+
 
 # Testmonial from Gaming Customers
 * Azure Games:
@@ -416,36 +459,3 @@ Such fast-paced, simple games generate massive amounts of telemetry data from us
 
 The safety team automates over 90% of decisions. ClickHouse logs these ML decisions, tracks model verdicts, records who made them, and lets teams compare multiple models in real time.
 
-## MISC tips
-利用 ALTER TABLE FREEZE 实现赛季数据秒级快照：
-```
-# 赛季结束时执行
-ALTER TABLE season_data FREEZE WITH NAME 'season_2023_final'
-
-# 新赛季创建时恢复
-ALTER TABLE season_data ATTACH PARTITION '202401' FROM 'season_2023_final'
-```
-
-预聚合 ：对固定维度的指标预先计算
-```sql
-CREATE TABLE daily_user_stats (
-    stat_date Date,
-    user_id UInt64,
-    login_count UInt16,
-    play_minutes UInt32,
-    payment_total Decimal(18,2)
-) ENGINE = SummingMergeTree()
-ORDER BY (stat_date, user_id);
-```
-
-跳数索引 ：加速特定条件查询
-
-```
-ALTER TABLE game_events ADD INDEX idx_item(item_id) TYPE bloom_filter GRANULARITY 3;
-```
-
-冷热数据分离 ：将历史数据转移到廉价存储
-```sql
-CREATE TABLE game_events_archive AS game_events 
-ENGINE = Distributed('archive_cluster', currentDatabase(), 'game_events');
-```

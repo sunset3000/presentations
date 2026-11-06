@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { Activity, ArrowUpRight, BarChart3, Gamepad2, Globe2 } from 'lucide-react'
+import { Activity, ArrowUpRight, Gamepad2, Gauge, Globe2 } from 'lucide-react'
 import { SlideLayout } from '@/src/components/Presentation'
 import { Pill } from '@/src/components/ui'
 
@@ -23,22 +23,22 @@ const customers = [
     note: '移动游戏后端可观测性',
   },
   {
-    name: 'Azure Games',
-    tag: 'REAL-TIME',
-    icon: BarChart3,
-    metric: '90%+',
-    metricLabel: '安全决策自动化',
-    facts: '海量遥测 · 行为分析 · 变现优化',
-    note: 'ML 决策全量记录 · 多模型对比',
+    name: 'Azur Games',
+    tag: 'ELASTIC',
+    icon: Gauge,
+    metric: '-60%',
+    metricLabel: '运维成本下降',
+    facts: '120TB · 分钟级扩缩容',
+    note: '开发成本 -40% · 系统简化',
   },
   {
     name: 'Roblox',
-    tag: 'SCALE',
+    tag: 'ML · SCALE',
     icon: Gamepad2,
-    metric: '全球级',
-    metricLabel: '超大规模平台',
-    facts: '头部游戏平台的承载选择',
-    note: '验证超大规模游戏负载',
+    metric: '>90%',
+    metricLabel: '审核决策自动化',
+    facts: '~100M events/day',
+    note: 'ML 决策记录 · 判定追踪 · 多模型对比',
   },
 ]
 
@@ -113,9 +113,9 @@ export default function Customers() {
           <span className="h-3 w-px bg-white/10" />
           <span className="text-[12.5px] text-white/40">全球化运营</span>
           <span className="h-3 w-px bg-white/10" />
-          <span className="text-[12.5px] text-white/40">海量遥测分析</span>
+          <span className="text-[12.5px] text-white/40">系统简化 · 弹性扩缩</span>
           <span className="h-3 w-px bg-white/10" />
-          <span className="text-[12.5px] text-white/40">超大规模承载</span>
+          <span className="text-[12.5px] text-white/40">海量 ML 决策</span>
           <Pill tone="yellow" className="ml-auto">
             已验证的场景映射
           </Pill>

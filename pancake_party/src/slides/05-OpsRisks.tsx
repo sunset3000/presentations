@@ -1,8 +1,7 @@
 import type { CSSProperties } from 'react'
 import { CloudOff, Expand, HardDrive, Wrench } from 'lucide-react'
 import { SlideLayout } from '@/src/components/Presentation'
-import { Dot, IconBox, Pill } from '@/src/components/ui'
-import { cn } from '@/src/lib/cn'
+import { Dot, IconBox } from '@/src/components/ui'
 
 const risks = [
   {
@@ -24,7 +23,7 @@ const risks = [
   {
     index: '03',
     icon: Wrench,
-    title: 'On-Prem 运维',
+    title: 'Apache Doris 自身运维',
     en: 'Operations',
     desc: '升级、备份、故障排查均不轻松。关键工程人力被困在基础设施上。',
     tag: '人力黑洞',
@@ -32,11 +31,10 @@ const risks = [
   {
     index: '04',
     icon: Expand,
-    title: 'Doris 扩容',
+    title: 'Apache Doris 扩容复杂',
     en: 'Scaling',
-    desc: 'FE / BE 需分别扩容；BE 扩容后数据再平衡可能耗时数小时至数天，性能下降直接影响业务。',
+    desc: 'FE / BE 需分别扩容；BE 扩容后数据再平衡可能耗时数小时至数天，性能下降直接影响业务稳定性。',
     tag: '数小时 → 数天',
-    accent: true,
   },
 ]
 
@@ -44,8 +42,8 @@ export default function OpsRisks() {
   return (
     <SlideLayout
       eyebrow="03 · 痛点 01 · 运维成本"
-      title="自建 OLAP 的四类运维风险"
-      subtitle="每一次故障与扩容，都在消耗团队与业务窗口"
+      title="自建 Apache Doris 的运维成本高昂"
+      subtitle="可能（不局限）的运维困难包括——每一次故障与扩容，都在消耗团队与业务窗口"
     >
       <div className="flex h-full flex-col justify-center">
         <div className="grid grid-cols-2 gap-4">
@@ -54,12 +52,7 @@ export default function OpsRisks() {
             return (
               <div
                 key={risk.index}
-                className={cn(
-                  'anim-rise relative flex h-[246px] flex-col justify-between rounded-xl border p-6',
-                  risk.accent
-                    ? 'border-ch-yellow bg-ch-yellow text-ch-bg'
-                    : 'border-white/10 bg-white/[0.035]',
-                )}
+                className="group anim-rise relative flex h-[246px] flex-col justify-between rounded-xl border border-white/10 bg-white/[0.035] p-6 transition-colors duration-300 hover:border-ch-yellow hover:bg-ch-yellow hover:text-ch-bg"
                 style={{ '--delay': `${100 + i * 70}ms` } as CSSProperties}
               >
                 <div>
@@ -67,19 +60,10 @@ export default function OpsRisks() {
                     <IconBox
                       icon={Icon}
                       size={42}
-                      solid={!risk.accent}
-                      className={
-                        risk.accent
-                          ? 'bg-ch-bg text-ch-yellow ring-0'
-                          : undefined
-                      }
+                      solid
+                      className="transition-colors duration-300 group-hover:bg-ch-bg group-hover:text-ch-yellow"
                     />
-                    <span
-                      className={cn(
-                        'font-mono text-[30px] font-medium leading-none',
-                        risk.accent ? 'text-ch-bg/15' : 'text-white/[0.08]',
-                      )}
-                    >
+                    <span className="font-mono text-[30px] font-medium leading-none text-white/[0.08] transition-colors duration-300 group-hover:text-ch-bg/15">
                       {risk.index}
                     </span>
                   </div>
@@ -88,39 +72,20 @@ export default function OpsRisks() {
                     <span className="text-[21px] font-semibold tracking-[-0.01em]">
                       {risk.title}
                     </span>
-                    <span
-                      className={cn(
-                        'font-mono text-[10.5px] uppercase tracking-[0.18em]',
-                        risk.accent ? 'text-ch-bg/45' : 'text-white/30',
-                      )}
-                    >
+                    <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-white/30 transition-colors duration-300 group-hover:text-ch-bg/45">
                       {risk.en}
                     </span>
                   </h3>
-                  <p
-                    className={cn(
-                      'mt-2 max-w-[540px] text-[14px] leading-[1.6]',
-                      risk.accent ? 'text-ch-bg/70' : 'text-white/50',
-                    )}
-                  >
+                  <p className="mt-2 max-w-[540px] text-[14px] leading-[1.6] text-white/50 transition-colors duration-300 group-hover:text-ch-bg/70">
                     {risk.desc}
                   </p>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  {risk.accent ? (
-                    <span className="inline-flex items-center gap-2 bg-ch-bg px-3 py-1.5 text-[12.5px] font-semibold text-ch-yellow">
-                      <Dot className="bg-ch-yellow" />
-                      {risk.tag}
-                    </span>
-                  ) : (
-                    <Pill>{risk.tag}</Pill>
-                  )}
-                  {risk.accent && (
-                    <span className="font-mono text-[11px] tracking-[0.18em] text-ch-bg/45">
-                      CRITICAL PATH
-                    </span>
-                  )}
+                  <span className="inline-flex items-center gap-2 border border-white/12 px-3 py-1.5 text-[12.5px] font-semibold text-white/60 transition-colors duration-300 group-hover:border-transparent group-hover:bg-ch-bg group-hover:text-ch-yellow">
+                    <Dot className="bg-ch-yellow opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    {risk.tag}
+                  </span>
                 </div>
               </div>
             )
@@ -130,7 +95,7 @@ export default function OpsRisks() {
         <div className="mt-5 flex items-center justify-center gap-3">
           <Dot />
           <p className="text-[14px] text-white/40">
-            第 4 类风险最贴近游戏业务：扩容不是「加机器」，而是「等数据再平衡」。
+            第 4 类风险最贴近游戏业务：扩容不是「加机器」，而是「等数据再平衡」，直接撞上版本上线洪峰。
           </p>
         </div>
       </div>
